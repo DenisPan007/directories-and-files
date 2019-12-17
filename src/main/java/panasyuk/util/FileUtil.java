@@ -17,7 +17,6 @@ public class FileUtil {
         List<FileInfoDto> fileInfoDtoList = Stream.of(file.listFiles())
                 .map((fileItem) -> FileInfoDto.builder()
                         .path(fileItem.getPath())
-                        //todo is this real size?
                         .size(String.valueOf(fileItem.length()))
                         .build()
                 )
@@ -25,6 +24,7 @@ public class FileUtil {
 
         return DirectoryInfoDto.builder()
                 .fileList(fileInfoDtoList)
+                .path(pathStr)
                 .creationDate(LocalDateTime.now())
                 .build();
     }

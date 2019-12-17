@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS file(
- id int  PRIMARY KEY,
- path VARCHAR(255),
- size long
+ path VARCHAR(255) PRIMARY KEY,
+ size long,
+ parent_path VARCHAR(255),
+ foreign key (parent_path) references file(path)
  );
