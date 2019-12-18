@@ -23,12 +23,14 @@ public class DirectoryService {
         DirectoryInfoDto directory = fileUtil.getDirectoryInfoDto(path);
         FileEntity parentEntity = FileEntity.builder()
                 .path(path)
+                .addingDate(directory.getAddingDate())
                 .build();
         Set<FileEntity> fileEntities = directory.getFileList().stream()
                 .map((file)->FileEntity.builder()
                         .path(file.getPath())
                         .size(file.getSize())
                         .parentFile(parentEntity)
+                        .addingDate(parentEntity.getAddingDate())
                         .build())
                 .collect(Collectors.toSet());
         fileEntities.forEach(fileRepository::save);

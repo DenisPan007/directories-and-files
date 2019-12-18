@@ -1,5 +1,6 @@
 package panasyuk.file;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,6 +30,9 @@ public class FileEntity {
     @Id
     @Column(name = "path")
     private String path;
+
+    @Column(name = "adding_date")
+    private LocalDateTime addingDate;
 
     @Column(name = "size")
     private String size;

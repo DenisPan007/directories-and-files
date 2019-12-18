@@ -16,8 +16,7 @@ import lombok.Setter;
 public class DirectoryInfoDto {
 
     private String path;
-    private LocalDateTime creationDate;
+    private LocalDateTime addingDate;
     private List<FileInfoDto> fileList;
     private String size;
-
 }

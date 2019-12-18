@@ -25,7 +25,7 @@ public class FileUtil {
         return DirectoryInfoDto.builder()
                 .fileList(fileInfoDtoList)
                 .path(pathStr)
-                .creationDate(LocalDateTime.now())
+                .addingDate(LocalDateTime.now())
                 .build();
     }
 
