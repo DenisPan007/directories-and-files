@@ -13,10 +13,9 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class DirectoryInfoDto {
+public class DirectoryInfo {
 
     private String path;
     private LocalDateTime addingDate;
     private List<FileInfoDto> fileList;
-    private String size;
 }

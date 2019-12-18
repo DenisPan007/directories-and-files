@@ -47,38 +47,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td id="testID">12.10.1942</td>
-                    <td>/temp/test</td>
-                    <td>12</td>
-                    <td>16</td>
-                    <td>300 Mb</td>
-                    <td>
-                        <button class="btn btn-outline-dark btn-block" onclick="getFiles();" type="button">Файлы
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>18.02.1998</td>
-                    <td>/root/dir</td>
-                    <td>18</td>
-                    <td>11</td>
-                    <td>100 Mb</td>
 
-                </tr>
-                <tr>
-                    <td>09.01.2000</td>
-                    <td>/test/data</td>
-                    <td>22</td>
-                    <td>10</td>
-                    <td>200 Mb</td>
-                </tr>
-                <tr>
-                    <td>11.10.2012</td>
-                    <td>/temp/test/else</td>
-                    <td>11</td>
-                    <td>18</td>
-                    <td>360 Mb</td>
+                <tr th:each="directory : ${directories}">
+                    <td th:text="${directory.addingDate}"></td>
+                    <td th:text="${directory.path}"></td>
+                    <td th:text="${directory.innerFilesCount}"></td>
+                    <td th:text="${directory.innerDirCount}"></td>
+                    <td th:text="${directory.innerFilesSize != null} ? ${directory.innerFilesSize} : 'DIR'"></td>
                 </tr>
                 </tbody>
             </table>

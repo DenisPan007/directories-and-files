@@ -35,7 +35,7 @@ public class FileEntity {
     private LocalDateTime addingDate;
 
     @Column(name = "size")
-    private String size;
+    private Long size;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "parent_path")

@@ -9,20 +9,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class FileUtil {
+public class DirectoryUtil {
 
-    public DirectoryInfoDto getDirectoryInfoDto(String pathStr) {
+    public DirectoryInfo getDirectoryInfoDto(String pathStr) {
         File file = getFile(pathStr);
+        File[] innerFilesList = file.listFiles();
 
-        List<FileInfoDto> fileInfoDtoList = Stream.of(file.listFiles())
+        List<FileInfoDto> fileInfoDtoList = Stream.of(innerFilesList)
                 .map((fileItem) -> FileInfoDto.builder()
                         .path(fileItem.getPath())
-                        .size(String.valueOf(fileItem.length()))
+                        .size(fileItem.isFile() ? fileItem.length() : null)
                         .build()
                 )
                 .collect(Collectors.toList());
 
-        return DirectoryInfoDto.builder()
+        return DirectoryInfo.builder()
                 .fileList(fileInfoDtoList)
                 .path(pathStr)
                 .addingDate(LocalDateTime.now())
@@ -42,5 +43,4 @@ public class FileUtil {
             throw new FileNotFoundException("Incorrect path");
         }
     }
-
 }

@@ -11,6 +11,6 @@ public class FileInfoDto {
 
     private String path;
     //null if directory
-    private String size;
+    private Long size;
 
 }
