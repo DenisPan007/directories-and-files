@@ -1,5 +1,6 @@
 package panasyuk.main;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,14 +32,15 @@ public class DirectoryService {
                         .path(file.getPath())
                         .size(file.getSize())
                         .parentFile(parentEntity)
-                        .addingDate(parentEntity.getAddingDate())
                         .build())
                 .collect(Collectors.toSet());
+        setAddingDateToAlreadyAddedDirectories(fileEntities, directory.getAddingDate());
+
         fileEntities.forEach(fileRepository::save);
     }
 
     public List<DirectoryDto> getDirectories() {
-        List<FileEntity> directoryList = fileRepository.findBySizeIsNull();
+        List<FileEntity> directoryList = fileRepository.findBySizeIsNullAndAddingDateIsNotNull();
 
         List<DirectoryDto> directoryDtoList = directoryList.stream()
                 .map((directory) -> {
@@ -80,5 +82,23 @@ public class DirectoryService {
 
     private boolean isFile(FileEntity fileEntity) {
         return fileEntity.getSize() != null;
+    }
+
+    /**
+     * The addingDate indicates that directory was added by user
+     * This method prevents the loss of it because of saving directory in higher hierarchy level
+     */
+    private void setAddingDateToAlreadyAddedDirectories(Set<FileEntity> fileEntities, LocalDateTime addingDate) {
+        List<String> alreadyAddedDirectoryIdList = fileRepository
+                .findBySizeIsNullAndAddingDateIsNotNull()
+                .stream()
+                .map(FileEntity::getPath)
+                .collect(Collectors.toList());
+
+        for (FileEntity fileEntity : fileEntities) {
+            if (alreadyAddedDirectoryIdList.contains(fileEntity.getPath())) {
+                fileEntity.setAddingDate(addingDate);
+            }
+        }
     }
 }

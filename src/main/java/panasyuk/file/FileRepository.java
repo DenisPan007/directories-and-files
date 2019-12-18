@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 public interface FileRepository extends JpaRepository<FileEntity, Integer> {
 
     /**
-     * Search directories (size is null)
+     * Search added directories (size is null)
      */
-    List<FileEntity> findBySizeIsNull();
+    List<FileEntity> findBySizeIsNullAndAddingDateIsNotNull();
 
     /**
      * Search inner files and directories
