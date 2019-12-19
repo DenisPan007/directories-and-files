@@ -10,4 +10,13 @@ import lombok.Setter;
 public class FileDto {
     private String name;
     private String size;
+
+    public boolean isDirectory() {
+        try {
+            Long.parseLong(size);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
+    }
 }

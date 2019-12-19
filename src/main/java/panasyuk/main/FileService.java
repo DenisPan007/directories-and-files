@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import panasyuk.file.FileEntity;
 import panasyuk.file.FileRepository;
+import panasyuk.util.FileComparator;
 
 @Service
 public class FileService {
@@ -28,6 +29,7 @@ public class FileService {
                         .build()
                 )
                 .collect(Collectors.toList());
+        fileDtoList.sort(new FileComparator());
         return fileDtoList;
     }
 
