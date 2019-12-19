@@ -1,6 +1,7 @@
 package panasyuk.main;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +17,6 @@ import panasyuk.util.DirectoryUtil;
 @Service
 public class DirectoryService {
 
-    //todo DI by spring
     private DirectoryUtil directoryUtil = new DirectoryUtil();
     @Autowired
     private FileRepository fileRepository;
@@ -46,11 +46,12 @@ public class DirectoryService {
                 .map((directory) -> {
                     List<FileEntity> innerFilesAndDirList = fileRepository.findByParentFile(directory);
                     return DirectoryDto.builder()
-                            .addingDate(directory.getAddingDate().toString())
+                            .addingDate(
+                                    directory.getAddingDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")))
                             .path(directory.getPath())
                             .innerDirCount(String.valueOf(calculateInnerDirAmount(innerFilesAndDirList)))
                             .innerFilesCount(String.valueOf(calculateInnerFilesAmount(innerFilesAndDirList)))
-                            .innerFilesSize(String.valueOf(calculateInnerFilesSize(innerFilesAndDirList)))
+                            .innerFilesSize(String.valueOf(getFileSize(calculateInnerFilesSize(innerFilesAndDirList))))
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -63,6 +64,16 @@ public class DirectoryService {
 
     public static boolean isFile(FileEntity fileEntity) {
         return fileEntity.getSize() != null;
+    }
+
+    public static String getFileSize(long sizeInBytes) {
+        if (sizeInBytes < 1024) {
+            return sizeInBytes + " B";
+        } else if (sizeInBytes < 1024 * 1024) {
+            return String.format("%.1f Kb", sizeInBytes / 1024.0);
+        } else {
+            return String.format("%.1f Mb", sizeInBytes / (1024 * 1024.0));
+        }
     }
 
     private long calculateInnerDirAmount(List<FileEntity> directoryList) {

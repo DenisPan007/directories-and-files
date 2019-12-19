@@ -32,7 +32,7 @@ public class FileService {
     }
 
     private String getSize(FileEntity fileEntity) {
-        return DirectoryService.isFile(fileEntity) ? String.valueOf(fileEntity.getSize()) : "&ltDIR&gt";
+        return DirectoryService.isFile(fileEntity) ? DirectoryService.getFileSize(fileEntity.getSize()) : "&ltDIR&gt";
     }
 
     private String getFileName(String filePath, String parentPath) {
