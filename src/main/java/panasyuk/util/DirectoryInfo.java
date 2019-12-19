@@ -17,5 +17,5 @@ public class DirectoryInfo {
 
     private String path;
     private LocalDateTime addingDate;
-    private List<FileInfoDto> fileList;
+    private List<FileInfo> fileList;
 }

@@ -22,9 +22,8 @@ public class FileService {
         List<FileEntity> fileEntities = fileRepository.findByParentFile(directory);
 
         List<FileDto> fileDtoList = fileEntities.stream()
-                .filter(DirectoryService::isFile)
                 .map(fileEntity -> FileDto.builder()
-                        .size(String.valueOf(fileEntity.getSize()))
+                        .size(getSize(fileEntity))
                         .name(getFileName(fileEntity.getPath(), path))
                         .build()
                 )
@@ -32,7 +31,12 @@ public class FileService {
         return fileDtoList;
     }
 
+    private String getSize(FileEntity fileEntity) {
+        return DirectoryService.isFile(fileEntity) ? String.valueOf(fileEntity.getSize()) : "&ltDIR&gt";
+    }
+
     private String getFileName(String filePath, String parentPath) {
+
         return filePath.replace(parentPath + '\\', "");
     }
 

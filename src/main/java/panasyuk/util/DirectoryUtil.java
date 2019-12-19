@@ -15,8 +15,8 @@ public class DirectoryUtil {
         File file = getFile(pathStr);
         File[] innerFilesList = file.listFiles();
 
-        List<FileInfoDto> fileInfoDtoList = Stream.of(innerFilesList)
-                .map((fileItem) -> FileInfoDto.builder()
+        List<FileInfo> fileInfoList = Stream.of(innerFilesList)
+                .map((fileItem) -> FileInfo.builder()
                         .path(fileItem.getPath())
                         .size(fileItem.isFile() ? fileItem.length() : null)
                         .build()
@@ -24,7 +24,7 @@ public class DirectoryUtil {
                 .collect(Collectors.toList());
 
         return DirectoryInfo.builder()
-                .fileList(fileInfoDtoList)
+                .fileList(fileInfoList)
                 .path(pathStr)
                 .addingDate(LocalDateTime.now())
                 .build();

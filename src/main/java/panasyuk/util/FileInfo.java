@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class FileInfoDto {
+public class FileInfo {
 
     private String path;
     //null if directory

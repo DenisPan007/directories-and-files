@@ -51,9 +51,9 @@
                 <tr th:each="directory : ${directories}">
                     <td th:text="${directory.addingDate}"></td>
                     <td th:text="${directory.path}"></td>
-                    <td th:text="${directory.innerFilesCount}"></td>
                     <td th:text="${directory.innerDirCount}"></td>
-                    <td th:text="${directory.innerFilesSize != null} ? ${directory.innerFilesSize} : 'DIR'"></td>
+                    <td th:text="${directory.innerFilesCount}"></td>
+                    <td th:text="${directory.innerFilesSize}"></td>
                     <td>
                         <button th:id="${directory.path}" class="btn btn-outline-dark btn-block" onclick="getFiles(this.id);" type="button">Файлы
                         </button>
