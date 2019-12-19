@@ -1,4 +1,4 @@
-package panasyuk.file;
+package panasyuk.persistence;
 
 import java.util.List;
 

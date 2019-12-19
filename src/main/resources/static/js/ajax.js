@@ -18,7 +18,9 @@ function getFiles(id) {
 function fillTable(data){
 
 var html = '';
-for(var i = 0; i < data.length; i++)
-            html += '<tr><td>' + data[i].name + '</td><td>' + data[i].size + '</td></tr>';
-$('#modal_table_body').append(html);
+for(var i = 0; i < data.length; i++){
+      html += '<tr><td>' + data[i].name + '</td><td>' + data[i].size + '</td></tr>';
+      }
+         $('#modal_table_body').empty();
+         $('#modal_table_body').append(html);
 }

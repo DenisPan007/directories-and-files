@@ -1,4 +1,4 @@
-package panasyuk.file;
+package panasyuk.persistence;
 
 import java.time.LocalDateTime;
 import java.util.Set;

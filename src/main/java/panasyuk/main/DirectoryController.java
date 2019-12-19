@@ -53,14 +53,14 @@ public class DirectoryController {
     @ExceptionHandler({FileNotFoundException.class})
     public String handleFileNotFoundException(Model model, FileNotFoundException e) {
         model.addAttribute("errorMessage", e.getLocalizedMessage());
-        return "index";
+        return getDirectories(model);
     }
 
     @ExceptionHandler({Exception.class})
     public String handleException(Model model, Exception e) {
         log.error("Error: ", e);
         model.addAttribute("errorMessage", "Что то пошло не так, попробуйте перезагрузть страницу");
-        return "index";
+        return getDirectories(model);
     }
 
 }
