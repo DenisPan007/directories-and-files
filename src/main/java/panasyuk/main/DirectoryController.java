@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.extern.slf4j.Slf4j;
+import panasyuk.util.FileNotFoundException;
+
+@Slf4j
 @Controller
 @Transactional
 public class DirectoryController {
@@ -23,7 +28,6 @@ public class DirectoryController {
     @Autowired
     private FileService fileService;
 
-    //todo add validation
     @RequestMapping("/directory/save")
     @PostMapping
     public String save(Model model, @ModelAttribute PathDto pathDto) {
@@ -39,12 +43,24 @@ public class DirectoryController {
         return "index";
     }
 
-    //todo add validation
     @RequestMapping("/files")
     @ResponseBody
     @GetMapping
     public List<FileDto> getFiles(@RequestParam String directoryId) {
         return fileService.getFiles(directoryId);
+    }
+
+    @ExceptionHandler({FileNotFoundException.class})
+    public String handleFileNotFoundException(Model model, FileNotFoundException e) {
+        model.addAttribute("errorMessage", e.getLocalizedMessage());
+        return "index";
+    }
+
+    @ExceptionHandler({Exception.class})
+    public String handleException(Model model, Exception e) {
+        log.error("Error: ", e);
+        model.addAttribute("errorMessage", "Что то пошло не так, попробуйте перезагрузть страницу");
+        return "index";
     }
 
 }

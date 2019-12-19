@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.data.util.Pair;
+
 public class DirectoryUtil {
 
     public DirectoryInfo getDirectoryInfoDto(String pathStr) {
@@ -35,12 +37,12 @@ public class DirectoryUtil {
             Path path = Paths.get(pathStr);
             File file = path.toFile();
             if (!file.exists()) {
-                throw new FileNotFoundException("File not found for specified path");
+                throw new FileNotFoundException(
+                        Pair.of("Directory not found for specified path", "Директория не найдена по введенному пути"));
             }
             return file;
         } catch (InvalidPathException e) {
-            //todo change to validation exception
-            throw new FileNotFoundException("Incorrect path");
+            throw new RuntimeException("Incorrect path");
         }
     }
 }
