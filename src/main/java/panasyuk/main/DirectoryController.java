@@ -8,9 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Transactional
@@ -18,6 +19,9 @@ public class DirectoryController {
 
     @Autowired
     private DirectoryService directoryService;
+
+    @Autowired
+    private FileService fileService;
 
     //todo add validation
     @RequestMapping("/directory/save")
@@ -35,10 +39,12 @@ public class DirectoryController {
         return "index";
     }
 
-    @RequestMapping("/files/{directoryId}")
+    //todo add validation
+    @RequestMapping("/files")
+    @ResponseBody
     @GetMapping
-    public String getFiles(@PathVariable String directoryId) {
-        return "The files was gotten for directory with id: " + directoryId;
+    public List<FileDto> getFiles(@RequestParam String directoryId) {
+        return fileService.getFiles(directoryId);
     }
 
 }

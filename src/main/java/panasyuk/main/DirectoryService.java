@@ -57,31 +57,31 @@ public class DirectoryService {
         return directoryDtoList;
     }
 
+    public static boolean isDirectory(FileEntity fileEntity) {
+        return fileEntity.getSize() == null;
+    }
+
+    public static boolean isFile(FileEntity fileEntity) {
+        return fileEntity.getSize() != null;
+    }
+
     private long calculateInnerDirAmount(List<FileEntity> directoryList) {
         return directoryList.stream()
-                .filter(this::isDirectory)
+                .filter(DirectoryService::isDirectory)
                 .count();
     }
 
     private long calculateInnerFilesAmount(List<FileEntity> directoryList) {
         return directoryList.stream()
-                .filter(this::isFile)
+                .filter(DirectoryService::isFile)
                 .count();
     }
 
     private long calculateInnerFilesSize(List<FileEntity> directoryList) {
         return directoryList.stream()
-                .filter(this::isFile)
+                .filter(DirectoryService::isFile)
                 .mapToLong(FileEntity::getSize)
                 .sum();
-    }
-
-    private boolean isDirectory(FileEntity fileEntity) {
-        return fileEntity.getSize() == null;
-    }
-
-    private boolean isFile(FileEntity fileEntity) {
-        return fileEntity.getSize() != null;
     }
 
     /**

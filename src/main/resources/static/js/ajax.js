@@ -1,11 +1,11 @@
-function getFiles() {
+function getFiles(id) {
 
-    var search = $("#testID").text();
     $.ajax({
         type: "GET",
-        url: "/files"+'/'+ search,
+        dataType: 'json',
+        url: "/files"+'?directoryId='+ encodeURIComponent(id),
         success: function (data) {
-            alert(data);
+        fillTable(data);
             $('#files-modal').modal('show');
         },
         error: function (e) {
@@ -13,4 +13,12 @@ function getFiles() {
         }
     });
 
+}
+
+function fillTable(data){
+
+var html = '';
+for(var i = 0; i < data.length; i++)
+            html += '<tr><td>' + data[i].name + '</td><td>' + data[i].size + '</td></tr>';
+$('#modal_table_body').append(html);
 }
