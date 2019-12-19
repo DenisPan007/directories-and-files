@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import panasyuk.persistence.FileEntity;
 import panasyuk.persistence.FileRepository;
+import panasyuk.util.Consts;
 import panasyuk.util.FileComparator;
 
 @Service
@@ -34,7 +35,8 @@ public class FileService {
     }
 
     private String getSize(FileEntity fileEntity) {
-        return DirectoryService.isFile(fileEntity) ? DirectoryService.getFileSize(fileEntity.getSize()) : "&ltDIR&gt";
+        return DirectoryService.isFile(fileEntity) ? DirectoryService.getFileSize(fileEntity.getSize()) :
+                Consts.DIR_LABEL;
     }
 
     private String getFileName(String filePath, String parentPath) {
